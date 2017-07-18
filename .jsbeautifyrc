@@ -1,0 +1,10 @@
+{
+    "js": {
+        "comma_first": true,
+        "max_preserve_newlines":2,
+        "break_chained_methods": true
+    },
+    "json": {
+        "comma_first": false
+    }
+}

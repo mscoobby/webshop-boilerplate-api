@@ -2,12 +2,12 @@
     db: {
         uri: 'mongodb://127.0.0.1:27017/test'
         , options: {}
-        , debug: false
+        , debug: true
     }
     , SESSION_SECRET: 'webshop-boilerplate-test'
     , facebook: {
-        FACEBOOK_ID: '664556640337231'
-        , FACEBOOK_SECRET: 'fb9fe0f59dea3ff29dc9b4b168da69e6'
+        FACEBOOK_ID: '154162121819405'
+        , FACEBOOK_SECRET: 'fa74067934d90b57d5fdd985827ff2c5'
     , }
     , twitter: {
         TWITTER_KEY: 'w731RLPlFdIsDLz5gNz9ivU29'
@@ -18,12 +18,8 @@
         , GOOGLE_SECRET: 'QhIqsr8RhqhhunmYd2Mylb0K'
     }
     , instagram: {
-        INSTAGRAM_ID: ''
-        , INSTAGRAM_SECRET: ''
-    }
-    , tumblr: {
-        TUMBLR_KEY: ''
-        , TUMBLR_SECRET: ''
+        INSTAGRAM_ID: '529db0f79582448793bc2fa364efead3'
+        , INSTAGRAM_SECRET: 'b8c825c9ab82472cb17143bbb09ca988'
     }
     , paypal: {
         PAYPAL_ID: ''

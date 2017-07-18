@@ -8,17 +8,7 @@ const FacebookStrategy = require('passport-facebook')
     .Strategy;
 const TwitterStrategy = require('passport-twitter')
     .Strategy;
-const GitHubStrategy = require('passport-github')
-    .Strategy;
 const GoogleStrategy = require('passport-google-oauth')
-    .OAuth2Strategy;
-const LinkedInStrategy = require('passport-linkedin-oauth2')
-    .Strategy;
-const OpenIDStrategy = require('passport-openid')
-    .Strategy;
-const OAuthStrategy = require('passport-oauth')
-    .OAuthStrategy;
-const OAuth2Strategy = require('passport-oauth')
     .OAuth2Strategy;
 const config = require('config');
 
@@ -113,8 +103,7 @@ passport.use(new FacebookStrategy({
                         , accessToken
                     });
                     user.profile.name = user.profile.name || `${profile.name.givenName} ${profile.name.familyName}`;
-                    user.profile.gender = user.profile.gender || profile._json.gender;
-                    user.profile.picture = user.profile.picture || `https://graph.facebook.com/${profile.id}/picture?type=large`;
+                    // user.profile.picture = user.profile.picture || `https://graph.facebook.com/${profile.id}/picture?type=large`;
                     user.save((err) => {
                         req.flash('info', {
                             msg: 'Facebook account has been linked.'
@@ -154,9 +143,7 @@ passport.use(new FacebookStrategy({
                         , accessToken
                     });
                     user.profile.name = `${profile.name.givenName} ${profile.name.familyName}`;
-                    user.profile.gender = profile._json.gender;
-                    user.profile.picture = `https://graph.facebook.com/${profile.id}/picture?type=large`;
-                    user.profile.location = (profile._json.location) ? profile._json.location.name : '';
+                    // user.profile.picture = `https://graph.facebook.com/${profile.id}/picture?type=large`;
                     user.save((err) => {
                         done(err, user);
                     });
@@ -166,8 +153,9 @@ passport.use(new FacebookStrategy({
     }
 }));
 
-// Sign in with Twitter.
-
+/**
+ * Sign in with Twitter.
+ */
 passport.use(new TwitterStrategy({
     consumerKey: config.get('twitter.TWITTER_KEY')
     , consumerSecret: config.get('twitter.TWITTER_SECRET')
@@ -275,8 +263,7 @@ passport.use(new GoogleStrategy({
                         , accessToken
                     });
                     user.profile.name = user.profile.name || profile.displayName;
-                    user.profile.gender = user.profile.gender || profile._json.gender;
-                    user.profile.picture = user.profile.picture || profile._json.image.url;
+                    // user.profile.picture = user.profile.picture || profile._json.image.url;
                     user.save((err) => {
                         req.flash('info', {
                             msg: 'Google account has been linked.'
@@ -316,8 +303,7 @@ passport.use(new GoogleStrategy({
                         , accessToken
                     });
                     user.profile.name = profile.displayName;
-                    user.profile.gender = profile._json.gender;
-                    user.profile.picture = profile._json.image.url;
+                    // user.profile.picture = profile._json.image.url;
                     user.save((err) => {
                         done(err, user);
                     });
@@ -330,104 +316,73 @@ passport.use(new GoogleStrategy({
 /**
  * Sign in with Instagram.
  */
-// passport.use(new InstagramStrategy({
-//     clientID: config.get('instagram.INSTAGRAM_ID')
-//     , clientSecret: config.get('instagram.INSTAGRAM_SECRET')
-//     , callbackURL: '/auth/instagram/callback'
-//     , passReqToCallback: true
-// }, (req, accessToken, refreshToken, profile, done) => {
-//     if (req.user) {
-//         User.findOne({
-//             instagram: profile.id
-//         }, (err, existingUser) => {
-//             if (err) {
-//                 return done(err);
-//             }
-//             if (existingUser) {
-//                 req.flash('errors', {
-//                     msg: 'There is already an Instagram account that belongs to you. Sign in with that account or delete it, then link it with your current account.'
-//                 });
-//                 done(err);
-//             } else {
-//                 User.findById(req.user.id, (err, user) => {
-//                     if (err) {
-//                         return done(err);
-//                     }
-//                     user.instagram = profile.id;
-//                     user.tokens.push({
-//                         kind: 'instagram'
-//                         , accessToken
-//                     });
-//                     user.profile.name = user.profile.name || profile.displayName;
-//                     user.profile.picture = user.profile.picture || profile._json.data.profile_picture;
-//                     user.profile.website = user.profile.website || profile._json.data.website;
-//                     user.save((err) => {
-//                         req.flash('info', {
-//                             msg: 'Instagram account has been linked.'
-//                         });
-//                         done(err, user);
-//                     });
-//                 });
-//             }
-//         });
-//     } else {
-//         User.findOne({
-//             instagram: profile.id
-//         }, (err, existingUser) => {
-//             if (err) {
-//                 return done(err);
-//             }
-//             if (existingUser) {
-//                 return done(null, existingUser);
-//             }
-//             const user = new User();
-//             user.instagram = profile.id;
-//             user.tokens.push({
-//                 kind: 'instagram'
-//                 , accessToken
-//             });
-//             user.profile.name = profile.displayName;
-//             // Similar to Twitter API, assigns a temporary e-mail address
-//             // to get on with the registration process. It can be changed later
-//             // to a valid e-mail address in Profile Management.
-//             user.email = `${profile.username}@instagram.com`;
-//             user.profile.website = profile._json.data.website;
-//             user.profile.picture = profile._json.data.profile_picture;
-//             user.save((err) => {
-//                 done(err, user);
-//             });
-//         });
-//     }
-// }));
-
-/**
- * Tumblr API OAuth.
- */
-// passport.use('tumblr', new OAuthStrategy({
-//         requestTokenURL: 'http://www.tumblr.com/oauth/request_token'
-//         , accessTokenURL: 'http://www.tumblr.com/oauth/access_token'
-//         , userAuthorizationURL: 'http://www.tumblr.com/oauth/authorize'
-//         , consumerKey: config.get('tumblr.TUMBLR_KEY')
-//         , consumerSecret: config.get('tumblr.TUMBLR_SECRET')
-//         , callbackURL: '/auth/tumblr/callback'
-//         , passReqToCallback: true
-//     }
-//     , (req, token, tokenSecret, profile, done) => {
-//         User.findById(req.user._id, (err, user) => {
-//             if (err) {
-//                 return done(err);
-//             }
-//             user.tokens.push({
-//                 kind: 'tumblr'
-//                 , accessToken: token
-//                 , tokenSecret
-//             });
-//             user.save((err) => {
-//                 done(err, user);
-//             });
-//         });
-//     }
-// ));
+passport.use(new InstagramStrategy({
+    clientID: config.get('instagram.INSTAGRAM_ID')
+    , clientSecret: config.get('instagram.INSTAGRAM_SECRET')
+    , callbackURL: '/auth/instagram/callback'
+    , passReqToCallback: true
+}, (req, accessToken, refreshToken, profile, done) => {
+    if (req.user) {
+        User.findOne({
+            instagram: profile.id
+        }, (err, existingUser) => {
+            if (err) {
+                return done(err);
+            }
+            if (existingUser) {
+                req.flash('errors', {
+                    msg: 'There is already an Instagram account that belongs to you. Sign in with that account or delete it, then link it with your current account.'
+                });
+                done(err);
+            } else {
+                User.findById(req.user.id, (err, user) => {
+                    if (err) {
+                        return done(err);
+                    }
+                    user.instagram = profile.id;
+                    user.tokens.push({
+                        kind: 'instagram'
+                        , accessToken
+                    });
+                    user.profile.name = user.profile.name || profile.displayName;
+                    // user.profile.picture = user.profile.picture || profile._json.data.profile_picture;
+                    user.save((err) => {
+                        req.flash('info', {
+                            msg: 'Instagram account has been linked.'
+                        });
+                        done(err, user);
+                    });
+                });
+            }
+        });
+    } else {
+        User.findOne({
+            instagram: profile.id
+        }, (err, existingUser) => {
+            if (err) {
+                return done(err);
+            }
+            if (existingUser) {
+                return done(null, existingUser);
+            }
+            const user = new User();
+            user.instagram = profile.id;
+            user.tokens.push({
+                kind: 'instagram'
+                , accessToken
+            });
+            user.profile.name = profile.displayName;
+            // Similar to Twitter API, assigns a temporary e-mail address
+            // to get on with the registration process. It can be changed later
+            // to a valid e-mail address in Profile Management.
+            user.email = `${profile.username}@instagram.com`;
+            // user.profile.picture = profile._json.data.profile_picture;
+            user.save((err) => {
+                done(err, user);
+            });
+        });
+    }
+}));
 
 /**
  * Login Required middleware.

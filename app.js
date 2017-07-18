@@ -9,7 +9,6 @@ const logger = require('morgan');
 const chalk = require('chalk');
 const errorHandler = require('errorhandler');
 const lusca = require('lusca');
-const dotenv = require('dotenv');
 const MongoStore = require('connect-mongo')(session);
 const flash = require('express-flash');
 const path = require('path');
@@ -20,12 +19,6 @@ const expressStatusMonitor = require('express-status-monitor');
 const sass = require('node-sass-middleware');
 const config = require('config');
 
-/**
- * Load environment variables from .env file, where API keys and passwords are configured.
- */
-dotenv.load({
-    path: '.env.example'
-});
 
 /**
  * Controllers (route handlers).
@@ -145,7 +138,6 @@ app.get('/account/unlink/:provider', passportConfig.isAuthenticated, userControl
 app.get('/api', apiController.getApi);
 app.get('/api/stripe', apiController.getStripe);
 app.post('/api/stripe', apiController.postStripe);
-app.get('/api/tumblr', passportConfig.isAuthenticated, passportConfig.isAuthorized, apiController.getTumblr);
 app.get('/api/facebook', passportConfig.isAuthenticated, passportConfig.isAuthorized, apiController.getFacebook);
 app.get('/api/twitter', passportConfig.isAuthenticated, passportConfig.isAuthorized, apiController.getTwitter);
 app.post('/api/twitter', passportConfig.isAuthenticated, passportConfig.isAuthorized, apiController.postTwitter);
@@ -154,6 +146,7 @@ app.get('/api/paypal', apiController.getPayPal);
 app.get('/api/paypal/success', apiController.getPayPalSuccess);
 app.get('/api/paypal/cancel', apiController.getPayPalCancel);
 app.get('/api/google-maps', apiController.getGoogleMaps);
+app.get('/api/error', apiController.getError);
 
 /**
  * OAuth authentication routes. (Sign in)
@@ -185,16 +178,6 @@ app.get('/auth/twitter/callback', passport.authenticate('twitter', {
     failureRedirect: '/login'
 }), (req, res) => {
     res.redirect(req.session.returnTo || '/');
-});
-
-/**
- * OAuth authorization routes. (API examples)
- */
-app.get('/auth/tumblr', passport.authorize('tumblr'));
-app.get('/auth/tumblr/callback', passport.authorize('tumblr', {
-    failureRedirect: '/api'
-}), (req, res) => {
-    res.redirect('/api/tumblr');
 });
 
 /**

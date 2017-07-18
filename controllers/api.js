@@ -23,30 +23,13 @@ exports.getApi = (req, res) => {
 };
 
 /**
- * GET /api/tumblr
- * Tumblr API example.
+ * GET /api/error
+ * Throw an error
  */
-exports.getTumblr = (req, res, next) => {
-    const token = req.user.tokens.find(token => token.kind === 'tumblr');
-    const client = tumblr.createClient({
-        consumer_key: config.get('tumblr.TUMBLR_KEY')
-        , consumer_secret: config.get('tumblr.TUMBLR_SECRET')
-        , token: token.accessToken
-        , token_secret: token.tokenSecret
-    });
-    client.posts('mmosdotcom.tumblr.com', {
-        type: 'photo'
-    }, (err, data) => {
-        if (err) {
-            return next(err);
-        }
-        res.render('api/tumblr', {
-            title: 'Tumblr API'
-            , blog: data.blog
-            , photoset: data.posts[0].photos
-        });
-    });
-};
+ exports.getError = (req, res, next) => {
+   throw new Error('There you go an Error')
+ }
+
 
 /**
  * GET /api/facebook

@@ -1,0 +1,42 @@
+{
+    db: {
+        uri: 'mongodb://127.0.0.1:27017/testProd'
+        , options: {}
+        , debug: false
+    }
+    , SESSION_SECRET: ''
+    facebook: {
+        FACEBOOK_ID: '544051925778665'
+        , FACEBOOK_SECRET: '44ee31297a8929e09e925e765a14e34e'
+    , }
+    , twitter: {
+        TWITTER_KEY: ''
+        , TWITTER_SECRET: ''
+    }
+    , google: {
+        GOOGLE_ID: ''
+        , GOOGLE_SECRET: ''
+    }
+    , instagram: {
+        INSTAGRAM_ID: ''
+        , INSTAGRAM_SECRET: ''
+    }
+    , tumblr: {
+        TUMBLR_KEY: ''
+        , TUMBLR_SECRET: ''
+    }
+    , paypal: {
+        PAYPAL_ID: ''
+        , PAYPAL_SECRET: ''
+        , PAYPAL_RETURN_URL: ''
+        , PAYPAL_CANCEL_URL: ''
+    }
+    , sendgrid: {
+        SENDGRID_USER: ''
+        , SENDGRID_PASSWORD: ''
+    }
+    , stripe: {
+        STRIPE_SKEY: ''
+        , STRIPE_PKEY: ''
+    }
+}

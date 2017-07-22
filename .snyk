@@ -1,0 +1,25 @@
+# Snyk (https://snyk.io) policy file, patches or ignores known vulnerabilities.
+version: v1.7.1
+ignore: {}
+# patches apply the minimum changes required to fix a vulnerability
+patch:
+  'npm:ms:20170412':
+    - express-status-monitor > socket.io > debug > ms:
+        patched: '2017-07-22T10:40:12.941Z'
+    - express-status-monitor > socket.io > engine.io > debug > ms:
+        patched: '2017-07-22T10:40:12.941Z'
+    - express-status-monitor > socket.io > socket.io-adapter > debug > ms:
+        patched: '2017-07-22T10:40:12.941Z'
+    - express-status-monitor > socket.io > socket.io-client > debug > ms:
+        patched: '2017-07-22T10:40:12.941Z'
+    - express-status-monitor > socket.io > socket.io-client > engine.io-client > debug > ms:
+        patched: '2017-07-22T10:40:12.941Z'
+    - express-status-monitor > socket.io > socket.io-parser > debug > ms:
+        patched: '2017-07-22T10:40:12.941Z'
+    - express-status-monitor > socket.io > socket.io-adapter > socket.io-parser > debug > ms:
+        patched: '2017-07-22T10:40:12.941Z'
+    - express-status-monitor > socket.io > socket.io-client > socket.io-parser > debug > ms:
+        patched: '2017-07-22T10:40:12.941Z'
+  'npm:request:20160119':
+    - node-foursquare > winston > request:
+        patched: '2017-07-22T10:40:12.941Z'

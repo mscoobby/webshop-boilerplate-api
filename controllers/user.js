@@ -8,7 +8,7 @@ const { mailer } = require('../models/Mailer.js');
  * GET /login
  * Login page.
  */
-exports.getLogin = (req, res) => {
+exports.getLogin = (req, res, next) => {
     if (req.user) {
         return res.redirect('/');
     }
@@ -35,7 +35,7 @@ exports.postLogin = (req, res, next) => {
 
     if (errors) {
         req.flash('errors', errors);
-        return res.redirect('/login');
+        return res.redirect('/user/login');
     }
 
     passport.authenticate('local', (err, user, info) => {
@@ -44,7 +44,7 @@ exports.postLogin = (req, res, next) => {
         }
         if (!user) {
             req.flash('errors', info);
-            return res.redirect('/login');
+            return res.redirect('/user/login');
         }
         req.logIn(user, (err) => {
             if (err) {
@@ -100,7 +100,7 @@ exports.postSignup = (req, res, next) => {
 
     if (errors) {
         req.flash('errors', errors);
-        return res.redirect('/signup');
+        return res.redirect('/user/signup');
     }
 
     const user = new User({
@@ -118,7 +118,7 @@ exports.postSignup = (req, res, next) => {
             req.flash('errors', {
                 msg: 'Account with that email address already exists.'
             });
-            return res.redirect('/signup');
+            return res.redirect('/user/signup');
         }
         user.save((err) => {
             if (err) {
@@ -160,7 +160,7 @@ exports.postUpdateProfile = (req, res, next) => {
 
     if (errors) {
         req.flash('errors', errors);
-        return res.redirect('/account');
+        return res.redirect('/user/account');
     }
 
     User.findById(req.user.id, (err, user) => {
@@ -178,7 +178,7 @@ exports.postUpdateProfile = (req, res, next) => {
                     req.flash('errors', {
                         msg: 'The email address you have entered is already associated with an account.'
                     });
-                    return res.redirect('/account');
+                    return res.redirect('/user/account');
                 }
                 return next(err);
             }
@@ -204,7 +204,7 @@ exports.postUpdatePassword = (req, res, next) => {
 
     if (errors) {
         req.flash('errors', errors);
-        return res.redirect('/account');
+        return res.redirect('/user/account');
     }
 
     User.findById(req.user.id, (err, user) => {
@@ -219,7 +219,7 @@ exports.postUpdatePassword = (req, res, next) => {
             req.flash('success', {
                 msg: 'Password has been changed.'
             });
-            res.redirect('/account');
+            res.redirect('/user/account');
         });
     });
 };
@@ -262,7 +262,7 @@ exports.getOauthUnlink = (req, res, next) => {
             req.flash('info', {
                 msg: `${provider} account has been unlinked.`
             });
-            res.redirect('/account');
+            res.redirect('/user/account');
         });
     });
 };
@@ -289,7 +289,7 @@ exports.getReset = (req, res, next) => {
                 req.flash('errors', {
                     msg: 'Password reset token is invalid or has expired.'
                 });
-                return res.redirect('/forgot');
+                return res.redirect('/user/forgot');
             }
             res.render('account/reset', {
                 title: 'Password Reset'
@@ -397,7 +397,7 @@ exports.postForgot = (req, res, next) => {
 
     if (errors) {
         req.flash('errors', errors);
-        return res.redirect('/forgot');
+        return res.redirect('/user/forgot');
     }
 
     const createRandomToken = crypto
@@ -447,6 +447,6 @@ exports.postForgot = (req, res, next) => {
     createRandomToken
         .then(setRandomToken)
         .then(sendForgotPasswordEmail)
-        .then(() => res.redirect('/forgot'))
+        .then(() => res.redirect('/user/forgot'))
         .catch(next);
 };

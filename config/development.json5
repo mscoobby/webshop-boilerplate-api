@@ -16,6 +16,7 @@
     , google: {
         GOOGLE_ID: '357342618954-d8nhljjg22hrck3ho55m06qucv6frm2e.apps.googleusercontent.com'
         , GOOGLE_SECRET: 'QhIqsr8RhqhhunmYd2Mylb0K'
+        , MAP_KEY: 'AIzaSyC5BzYKGTadwaKAR89ETOaTBKxrN-GqRdQ'
     }
     , instagram: {
         INSTAGRAM_ID: '529db0f79582448793bc2fa364efead3'
@@ -27,12 +28,12 @@
         , PAYPAL_RETURN_URL: ''
         , PAYPAL_CANCEL_URL: ''
     }
-    , sendgrid: {
-        SENDGRID_USER: ''
-        , SENDGRID_PASSWORD: ''
+    , mail: {
+        GMAIL_USER: 'georgi@bookingtemps.com'
+        , GMAIL_PASSWORD: 'Minotaurteam123'
     }
     , stripe: {
-        STRIPE_SKEY: ''
-        , STRIPE_PKEY: ''
+        STRIPE_SKEY: 'sk_test_SUZMvjL9hsOqIcHRUmNb4703'
+        , STRIPE_PKEY: 'pk_test_ZEGObkaEyc9bpcxNFnLp79sq'
     }
 }

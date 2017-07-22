@@ -9,7 +9,7 @@ const paypal = require('paypal-rest-sdk');
  * GET /api
  * List of API examples.
  */
-exports.getApi = (req, res) => {
+exports.getApi = (req, res, next) => {
     res.render('api/index', {
         title: 'API Examples'
     });

@@ -4,7 +4,7 @@ const { mailer } = require('../models/Mailer.js')
  * GET /contact
  * Contact form page.
  */
-exports.getContact = (req, res) => {
+exports.getContact = (req, res, next) => {
     res.render('contact', {
         title: 'Contact'
     });

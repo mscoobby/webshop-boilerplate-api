@@ -1,5 +1,5 @@
-const bluebird = require('bluebird');
-const crypto = bluebird.promisifyAll(require('crypto'));
+const Promise = require('bluebird');
+const crypto = Promise.promisifyAll(require('crypto'));
 const passport = require('passport');
 const User = require('../models/User');
 const { mailer } = require('../models/Mailer.js');

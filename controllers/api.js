@@ -1,14 +1,9 @@
-const bluebird = require('bluebird');
-const request = bluebird.promisifyAll(require('request'), {
-    multiArgs: true
-});
+const Promise = require('bluebird');
+
 const config = require('config')
-const cheerio = require('cheerio');
 const Twit = require('twit');
 const stripe = require('stripe')(config.get('stripe.STRIPE_SKEY'));
 const paypal = require('paypal-rest-sdk');
-const ig = bluebird.promisifyAll(require('instagram-node')
-    .instagram());
 
 /**
  * GET /api

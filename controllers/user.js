@@ -1,9 +1,8 @@
 const bluebird = require('bluebird');
 const crypto = bluebird.promisifyAll(require('crypto'));
-const nodemailer = require('nodemailer');
 const passport = require('passport');
 const User = require('../models/User');
-const config = require('config');
+const { mailer } = require('../models/Mailer.js');
 
 /**
  * GET /login
@@ -347,20 +346,13 @@ exports.postReset = (req, res, next) => {
         if (!user) {
             return;
         }
-        const transporter = nodemailer.createTransport({
-            service: 'SendGrid'
-            , auth: {
-                user: config.get('sendgrid.SENDGRID_USER')
-                , pass: config.get('sendgrid.SENDGRID_PASSWORD')
-            }
-        });
         const mailOptions = {
             to: user.email
-            , from: 'hackathon@starter.com'
-            , subject: 'Your Hackathon Starter password has been changed'
+            , from: 'georgi@bookingtemps.com'
+            , subject: 'Your webshop-boilerplate password has been changed'
             , text: `Hello,\n\nThis is a confirmation that the password for your account ${user.email} has just been changed.\n`
         };
-        return transporter.sendMail(mailOptions)
+        return mailer.sendMail(mailOptions)
             .then(() => {
                 req.flash('success', {
                     msg: 'Success! Your password has been changed.'
@@ -435,23 +427,16 @@ exports.postForgot = (req, res, next) => {
             return;
         }
         const token = user.passwordResetToken;
-        const transporter = nodemailer.createTransport({
-            service: 'SendGrid'
-            , auth: {
-                user: config.get('sendgrid.SENDGRID_USER')
-                , pass: config.get('sendgrid.SENDGRID_PASSWORD')
-            }
-        });
         const mailOptions = {
             to: user.email
-            , from: 'hackathon@starter.com'
+            , from: 'georgi@bookingtemps.com'
             , subject: 'Reset your password on Hackathon Starter'
             , text: `You are receiving this email because you (or someone else) have requested the reset of the password for your account.\n\n
         Please click on the following link, or paste this into your browser to complete the process:\n\n
         http://${req.headers.host}/reset/${token}\n\n
         If you did not request this, please ignore this email and your password will remain unchanged.\n`
         };
-        return transporter.sendMail(mailOptions)
+        return mailer.sendMail(mailOptions)
             .then(() => {
                 req.flash('info', {
                     msg: `An e-mail has been sent to ${user.email} with further instructions.`

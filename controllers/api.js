@@ -4,8 +4,6 @@ const request = bluebird.promisifyAll(require('request'), {
 });
 const config = require('config')
 const cheerio = require('cheerio');
-const graph = require('fbgraph');
-const tumblr = require('tumblr.js');
 const Twit = require('twit');
 const stripe = require('stripe')(config.get('stripe.STRIPE_SKEY'));
 const paypal = require('paypal-rest-sdk');
@@ -29,25 +27,6 @@ exports.getApi = (req, res) => {
  exports.getError = (req, res, next) => {
    throw new Error('There you go an Error')
  }
-
-
-/**
- * GET /api/facebook
- * Facebook API example.
- */
-exports.getFacebook = (req, res, next) => {
-    const token = req.user.tokens.find(token => token.kind === 'facebook');
-    graph.setAccessToken(token.accessToken);
-    graph.get(`${req.user.facebook}?fields=id,name,email,first_name,last_name,gender,link,locale,timezone`, (err, results) => {
-        if (err) {
-            return next(err);
-        }
-        res.render('api/facebook', {
-            title: 'Facebook API'
-            , profile: results
-        });
-    });
-};
 
 /**
  * GET /api/twitter
@@ -149,37 +128,6 @@ exports.postStripe = (req, res) => {
 };
 
 /**
- * GET /api/instagram
- * Instagram API example.
- */
-exports.getInstagram = (req, res, next) => {
-    const token = req.user.tokens.find(token => token.kind === 'instagram');
-    ig.use({
-        client_id: config.get('instagram.INSTAGRAM_ID')
-        , client_secret: config.get('instagram.INSTAGRAM_SECRET')
-    });
-    ig.use({
-        access_token: token.accessToken
-    });
-    Promise.all([
-            ig.user_searchAsync('richellemead')
-            , ig.userAsync('175948269')
-            , ig.media_popularAsync()
-            , ig.user_self_media_recentAsync()
-        ])
-        .then(([searchByUsername, searchByUserId, popularImages, myRecentMedia]) => {
-            res.render('api/instagram', {
-                title: 'Instagram API'
-                , usernames: searchByUsername
-                , userById: searchByUserId
-                , popularImages
-                , myRecentMedia
-            });
-        })
-        .catch(next);
-};
-
-/**
  * GET /api/paypal
  * PayPal SDK example.
  */
@@ -256,5 +204,6 @@ exports.getPayPalCancel = (req, res) => {
 exports.getGoogleMaps = (req, res) => {
     res.render('api/google-maps', {
         title: 'Google Maps API'
+        , mapKey: config.get('google.MAP_KEY')
     });
 };

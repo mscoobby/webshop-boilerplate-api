@@ -6,8 +6,8 @@
     }
     , SESSION_SECRET: ''
     facebook: {
-        FACEBOOK_ID: '544051925778665'
-        , FACEBOOK_SECRET: '44ee31297a8929e09e925e765a14e34e'
+        FACEBOOK_ID: ''
+        , FACEBOOK_SECRET: ''
     , }
     , twitter: {
         TWITTER_KEY: ''

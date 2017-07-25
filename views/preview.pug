@@ -1,0 +1,45 @@
+extends layout
+
+block content
+  h1= product.title
+  .product-container#slideshow
+    .product-preview
+      .film-strip
+        a(href="#")#prev-btn
+          i.fa.fa-chevron-up.fa-2x
+        ul.thumbnail-list
+          each image, index in product.imagePaths
+            li.thumbnail.thumb(data-thumb-id=index, class=(index == 0) ? 'active' : undefined)
+              a(href="#"): img(src=image)
+        a(href="#")#next-btn
+          i.fa.fa-chevron-down.fa-2x
+      .current-image
+          img(src=product.imagePaths[0])
+    .product-details
+      .description
+        h3= product.title
+        h4= product.price
+        p= product.description
+        hr
+      .options
+        form.form-horizontal(method='POST')
+          input(type='hidden', name='_csrf', value=_csrf)
+          .form-group
+            label(class='col-sm-3 control-label', for='size') Size
+            .col-sm-7
+              select.form-control(name="size")
+                each size in product.sizes
+                  option(value=size)= size
+          .form-group
+            label(class='col-sm-3 control-label', for='color') Color
+            .col-sm-7
+              select.form-control(name="color")
+                each color in product.colors
+                  option(value=color)= color
+          .form-group
+            label(class='col-sm-3 control-label', for='qty') Quantity
+            .col-sm-7
+              input(type='number' min='1' name='qty' value='1').form-control
+          .form-group
+            .col-sm-offset-3.col-sm-7
+              button.btn.btn-primary(type='submit') Add to bag

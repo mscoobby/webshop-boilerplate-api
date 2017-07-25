@@ -1,0 +1,12 @@
+extends layout
+
+block content
+  h1 Shop
+  .grid
+    each product in products
+      a(href='/shop/' + product.id).thumbnail
+        .image-box
+          img(src=product.imagePaths[0], alt="Product image").img-responsive
+        .caption
+          h3.text-center= product.title
+          h4.text-success.text-center $#{product.price}

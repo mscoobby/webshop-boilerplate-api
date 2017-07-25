@@ -20,10 +20,7 @@ const sass = require('node-sass-middleware');
 /**
  * Controllers (route handlers).
  */
-const homeController = require('./controllers/home');
-const userController = require('./controllers/user');
 const apiController = require('./controllers/api');
-const contactController = require('./controllers/contact');
 
 /**
  * API keys and Passport configuration.
@@ -115,6 +112,7 @@ app.use(express.static(path.join(__dirname, 'public'), {
  */
 app.use('/user', require('./routes/user.routes'));
 app.use('/auth', require('./routes/auth.routes'))
+app.use('/shop', require('./routes/shop.routes'))
 app.use('/', require('./routes/index'));
 
 

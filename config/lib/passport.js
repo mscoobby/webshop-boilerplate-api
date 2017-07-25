@@ -76,7 +76,7 @@ passport.use(new FacebookStrategy({
     clientID: config.get('facebook.FACEBOOK_ID')
     , clientSecret: config.get('facebook.FACEBOOK_SECRET')
     , callbackURL: '/auth/facebook/callback'
-    , profileFields: ['name', 'email', 'link', 'locale', 'timezone', 'gender']
+    , profileFields: ['name', 'email', 'link', 'locale', 'timezone']
     , passReqToCallback: true
 }, (req, accessToken, refreshToken, profile, done) => {
     if (req.user) {
@@ -185,8 +185,7 @@ passport.use(new TwitterStrategy({
                         , tokenSecret
                     });
                     user.profile.name = user.profile.name || profile.displayName;
-                    user.profile.location = user.profile.location || profile._json.location;
-                    user.profile.picture = user.profile.picture || profile._json.profile_image_url_https;
+                    // user.profile.picture = user.profile.picture || profile._json.profile_image_url_https;
                     user.save((err) => {
                         if (err) {
                             return done(err);
@@ -221,8 +220,7 @@ passport.use(new TwitterStrategy({
                 , tokenSecret
             });
             user.profile.name = profile.displayName;
-            user.profile.location = profile._json.location;
-            user.profile.picture = profile._json.profile_image_url_https;
+            // user.profile.picture = profile._json.profile_image_url_https;
             user.save((err) => {
                 done(err, user);
             });
@@ -390,7 +388,7 @@ exports.isAuthenticated = (req, res, next) => {
     if (req.isAuthenticated()) {
         return next();
     }
-    res.redirect('/login');
+    res.redirect('/user/login');
 };
 
 /**

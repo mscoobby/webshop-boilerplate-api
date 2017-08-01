@@ -4,7 +4,7 @@
         , options: {}
         , debug: true
     }
-    , SESSION_SECRET: 'webshop-boilerplate-test'
+    , TOKEN_SECRET: 'webshop-boilerplate-test'
     , facebook: {
         FACEBOOK_ID: '154162121819405'
         , FACEBOOK_SECRET: 'fa74067934d90b57d5fdd985827ff2c5'

@@ -1,12 +1,14 @@
 const passport = require('passport');
-const InstagramStrategy = require('passport-instagram')
-    .Strategy;
+const InstagramStrategy = require('passport-instagram').Strategy;
 const LocalStrategy = require('passport-local')
     .Strategy;
+const JwtStrategy = require('passport-jwt')
+    .Strategy;
+const ExtractJwt = require('passport-jwt')
+    .ExtractJwt;
 const FacebookStrategy = require('passport-facebook')
     .Strategy;
-const TwitterStrategy = require('passport-twitter')
-    .Strategy;
+const TwitterStrategy = require('passport-twitter-token');
 const GoogleStrategy = require('passport-google-oauth')
     .OAuth2Strategy;
 const config = require('config');
@@ -22,6 +24,24 @@ passport.deserializeUser((id, done) => {
         done(err, user);
     });
 });
+
+/**
+ * Authenticate using JWT
+ */
+passport.use(new JwtStrategy({jwtFromRequest: ExtractJwt.fromAuthHeader(), secretOrKey: config.get('TOKEN_SECRET')}, (jwt_payload, done) => {
+    User.findById(jwt_payload.sub, (err, user) => {
+        if (err) {
+            return done(err)
+        }
+        if (!user) {
+            return done(null, false, {
+                msg: `User not found`
+            })
+        } else {
+            return done(null, user)
+        }
+    })
+}))
 
 /**
  * Sign in using Email and Password.
@@ -385,10 +405,10 @@ passport.use(new InstagramStrategy({
  * Login Required middleware.
  */
 exports.isAuthenticated = (req, res, next) => {
-    if (req.isAuthenticated()) {
-        return next();
+    if (passport.authenticate('jwt', { session: false} )) {
+        return next(req.user);
     }
-    res.redirect('/user/login');
+    res.status(401);
 };
 
 /**

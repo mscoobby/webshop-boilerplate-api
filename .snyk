@@ -23,3 +23,6 @@ patch:
   'npm:request:20160119':
     - node-foursquare > winston > request:
         patched: '2017-07-22T10:40:12.941Z'
+  'npm:debug:20170905':
+    - mongoose > mquery > debug:
+        patched: '2017-09-30T00:21:08.553Z'

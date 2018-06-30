@@ -14,7 +14,8 @@
     "postinstall": "npm rebuild node-sass",
     "eslint": "eslint **/*.js",
     "snyk-protect": "snyk protect",
-    "prepublish": "npm run snyk-protect"
+    "prepublish": "npm run snyk-protect",
+    "prepare": "npm run snyk-protect"
   },
   "dependencies": {
     "bcrypt-nodejs": "^0.0.3",
@@ -48,7 +49,7 @@
     "paypal-rest-sdk": "^1.7.0",
     "pug": "^2.0.0-beta6",
     "sinon": "^2.4.0",
-    "snyk": "^1.41.1",
+    "snyk": "^1.88.0",
     "stripe": "^4.12.0",
     "twit": "^2.2.5"
   },

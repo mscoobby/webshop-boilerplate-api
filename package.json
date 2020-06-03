@@ -15,7 +15,7 @@
     "eslint": "eslint **/*.js",
     "snyk-protect": "snyk protect",
     "prepublish": "npm run snyk-protect",
-    "prepare": "npm run snyk-protect"
+    "prepare": "yarn run snyk-protect"
   },
   "dependencies": {
     "bcrypt-nodejs": "^0.0.3",
@@ -29,7 +29,7 @@
     "express": "^4.14.0",
     "express-flash": "^0.0.2",
     "express-session": "^1.14.2",
-    "express-status-monitor": "^1.0.0",
+    "express-status-monitor": "^1.2.9",
     "express-validator": "^5.0.0",
     "jsonwebtoken": "^8.0.0",
     "lusca": "^1.4.1",
@@ -49,7 +49,7 @@
     "paypal-rest-sdk": "^1.7.0",
     "pug": "^2.0.0-beta6",
     "sinon": "^2.4.0",
-    "snyk": "^1.290.1",
+    "snyk": "^1.316.2"
     "stripe": "^4.12.0",
     "twit": "^2.2.9"
   },
